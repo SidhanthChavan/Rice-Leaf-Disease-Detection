@@ -1,60 +1,59 @@
-# Rice Leaf Disease Detection — ResNet-18 Deep Learning Classifier
+# Rice Leaf Disease Classification
 
-> Automated classification of rice leaf diseases using transfer learning.
-> **92.5% accuracy · F1 = 0.91 · 3 disease classes · PyTorch + ResNet-18**
+A small transfer-learning experiment for classifying three rice leaf conditions from photographs. The notebook was developed as an academic exercise using PyTorch and a pre-trained ResNet-18 model.
 
-## Overview
+## Scope
 
-Rice feeds over 3.5 billion people globally. Diseases like Bacterial leaf blight, Brown spot, and Leaf smut cause yield losses of 20-50% in affected regions. Manual diagnosis is labour-intensive and error-prone — especially in resource-constrained farming communities.
+The source dataset contains 120 images divided equally between:
 
-This project implements a ResNet-18 CNN fine-tuned for three-class rice leaf disease classification, achieving 92.5% test accuracy with a lightweight model suitable for mobile deployment.
+- Bacterial leaf blight
+- Brown spot
+- Leaf smut
 
-## Results
+The notebook explores image augmentation, transfer learning, confusion-matrix analysis and qualitative review of correct and incorrect predictions.
 
-| Class | Accuracy | Precision | Recall | F1 |
-|-------|----------|-----------|--------|----|
-| Bacterial leaf blight | 90.0% | 0.90 | 0.87 | 0.88 |
-| Brown spot | 94.0% | 0.93 | 0.94 | 0.93 |
-| Leaf smut | 93.5% | 0.92 | 0.93 | 0.92 |
-| Average | 92.5% | 0.92 | 0.91 | 0.91 |
+Because the dataset is small and the saved notebook does not preserve a fixed independent test split, the results should be treated as preliminary. They are not a reliable estimate of performance in field conditions.
 
-## Ablation Study
+## Workflow
 
-| Configuration | Accuracy |
-|---------------|----------|
-| Full model (augmentation + pre-training) | 92.5% |
-| No augmentation | 80.0% |
-| No pre-training (random weights) | 83.5% |
-| Rotation only | 85.0% |
+```text
+Kaggle image dataset
+    -> resize and augmentation
+    -> ImageNet normalisation
+    -> pre-trained ResNet-18
+    -> three-class output layer
+    -> confusion matrix and per-class evaluation
+```
 
-## Architecture
+## Running the notebook
 
-- Backbone: ResNet-18 pre-trained on ImageNet
-- Final FC layer replaced for 3-class output
-- Input: 224x224 RGB images
-- Loss: Cross-entropy
-- Optimiser: Adam (lr=0.001) with ReduceLROnPlateau scheduler
-- Training: 20 epochs, batch size 16
+Python 3.10 or 3.11 is recommended.
 
-## Dataset
+```bash
+git clone https://github.com/SidhanthChavan/Rice-Leaf-Disease-Detection.git
+cd Rice-Leaf-Disease-Detection
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+jupyter notebook rice_leaf_detection.ipynb
+```
 
-- Source: Rice Leaf Diseases dataset (Kaggle — Vbookshelf)
-- Classes: Bacterial leaf blight, Brown spot, Leaf smut
-- Split: 80 train / 20 val / 20 test (120 total, 40 per class)
-- Augmentation: Random flips, rotations (10 degrees), colour jitter
+The notebook downloads the `vbookshelf/rice-leaf-diseases` dataset through `kagglehub`. Kaggle credentials may be required in a local environment. Some cells also contain Kaggle-specific paths and must be adjusted when running elsewhere.
 
-## Files
+## Current limitations
 
-| File | Description |
-|------|-------------|
-| rice_leaf_detection.ipynb | Full training and evaluation notebook |
-| Detailed_report.pdf | Complete technical report |
+- Only 120 source images are available.
+- The notebook creates validation selections more than once without preserving fixed indices.
+- No independent, untouched test set is stored.
+- Some later plotting cells use illustrative history values rather than a persisted training log.
+- No trained model or deployment package is included.
 
-## Tech Stack
+A credible follow-up would use a larger dataset, a stratified split saved to disk, seeded experiments and evaluation on images collected from a different source.
 
-Python · PyTorch · torchvision · ResNet-18 · NumPy · Matplotlib · scikit-learn
+## Stack
 
-## Author
+Python, PyTorch, torchvision, ResNet-18, scikit-learn, OpenCV, NumPy, Pandas, Matplotlib and Seaborn.
 
-Sidhanth Chavan — MSc Data Science, Manchester Metropolitan University
-linkedin.com/in/sidhanth-chavan · github.com/SidhanthChavan
+## Licence
+
+See [LICENSE](LICENSE).
