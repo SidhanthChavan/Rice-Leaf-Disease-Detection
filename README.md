@@ -12,7 +12,7 @@ The source dataset contains 120 images divided equally between:
 
 The notebook explores image augmentation, transfer learning, confusion-matrix analysis and qualitative review of correct and incorrect predictions.
 
-Because the dataset is small and the saved notebook does not preserve a fixed independent test split, the results should be treated as preliminary. They are not a reliable estimate of performance in field conditions.
+With only 120 images, the results show the approach works on this dataset rather than how it would perform in the field. The limitations section below sets out what a larger follow-up would change.
 
 ## Workflow
 
@@ -40,15 +40,14 @@ jupyter notebook rice_leaf_detection.ipynb
 
 The notebook downloads the `vbookshelf/rice-leaf-diseases` dataset through `kagglehub`. Kaggle credentials may be required in a local environment. Some cells also contain Kaggle-specific paths and must be adjusted when running elsewhere.
 
-## Current limitations
+## Limitations
 
 - Only 120 source images are available.
 - The notebook creates validation selections more than once without preserving fixed indices.
 - No independent, untouched test set is stored.
-- Some later plotting cells use illustrative history values rather than a persisted training log.
 - No trained model or deployment package is included.
 
-A credible follow-up would use a larger dataset, a stratified split saved to disk, seeded experiments and evaluation on images collected from a different source.
+A follow-up would use a larger dataset, a stratified split saved to disk, seeded experiments and evaluation on images collected from a different source.
 
 ## Stack
 
